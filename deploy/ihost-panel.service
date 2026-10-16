@@ -1,0 +1,16 @@
+[Unit]
+Description=iHost Panel
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/ihost
+EnvironmentFile=/opt/ihost/.env
+ExecStart=/usr/bin/node /opt/ihost/dist/server.js
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target
