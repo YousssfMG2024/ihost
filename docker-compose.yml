@@ -1,0 +1,25 @@
+services:
+  ihost-panel:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "6767:6767"
+    volumes:
+      - ihost-data:/app/.data
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  ihost-agent:
+    build: .
+    command: ["node", "dist/agent.js"]
+    restart: unless-stopped
+    env_file: .env.agent
+    ports:
+      - "8787:8787"
+    volumes:
+      - ihost-node-data:/opt/ihost-node
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  ihost-data:
+  ihost-node-data:
